@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
-import css from './ImageModal.module.css'; 
+import css from './ImageModal.module.css';
 import { useEffect } from 'react';
+import { ImageModalProps } from './ImageModal.types';
 
 const customStyles = {
   content: {
@@ -19,11 +20,11 @@ const customStyles = {
   },
 };
 
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
-export default function ImageModal({ isOpen, onClose, image }) {
+export default function ImageModal({ isOpen, onClose, image }: ImageModalProps) {
   useEffect(() => {
-    const handleKeyDown = event => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         onClose();
       }
@@ -43,14 +44,14 @@ export default function ImageModal({ isOpen, onClose, image }) {
   }
 
   return (
-      <Modal
-            isOpen={isOpen}
-            style={customStyles}
-            onRequestClose={onClose}
-            className={css.Modal}
-            overlayClassName={css.Overlay}
-            >
-            <img src={image.urls.regular} alt={image.alt_description} className={css.img } />
-        </Modal>
+    <Modal
+      isOpen={isOpen}
+      style={customStyles}
+      onRequestClose={onClose}
+      className={css.Modal}
+      overlayClassName={css.Overlay}
+    >
+      <img src={image.urls.regular} alt={image.alt_description || ""} className={css.img} />
+    </Modal>
   );
 }
